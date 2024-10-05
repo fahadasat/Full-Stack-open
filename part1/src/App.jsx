@@ -1,30 +1,51 @@
-const App = () => {
-    const name = "billy"
-    const nameTwo = "bobby"
+import {useState} from 'react'
 
-    const friends = [
-        { name: 'Peter', age: 4 },
-        { name: 'Maya', age: 10 },
-    ]
+const App = () => {
+    const [counter, setCounter] = useState(0)
+
+    const Display = ({counter}) => <div>{counter}</div>
+
+    const Button = ({onButtonClick, buttonTitle}) => <button onClick={onButtonClick}> {buttonTitle} </button>
+
+    const increaseCounter = () => {
+        setCounter(counter + 1)
+        console.log(counter + 1)
+    }
+
+    const decreaseCounter = () => {
+        setCounter(counter - 1)
+        console.log(counter - 1)
+    }
+
+    const resetCounter = () => {
+        setCounter(0)
+        console.log(0)
+    }
 
     return (
-        <>
-            <h1>Greetings</h1>
-            <Hello name={"bill"} nameTwo={"bob"}/>
-            <Hello name={name} nameTwo={nameTwo}/>
-            <p>{friends[0].name} {friends[0].age}</p>
-            <p>{friends[1].name} {friends[1].age}</p>
+        <div>
+            <Display counter={counter}> </Display>
+            <br/>
+            <Button onButtonClick={increaseCounter} buttonTitle='Add'/>
+            <Button onButtonClick={decreaseCounter} buttonTitle='Subtract'/>
+            <Button onButtonClick={resetCounter} buttonTitle='Reset'/>
+        </div>
 
-        </>
     )
 }
 
+const Hello = ({name, age}) => {
 
-const Hello = (props) => {
-    console.log(props)
+    const bornYear = () => new Date().getFullYear() - age
+
     return (
         <div>
-            <p>Hello {props.name} and {props.nameTwo}</p>
+            <p>
+                Hello {name}, you are {age} years old
+            </p>
+            <p>
+                So you were probably born in {bornYear()}
+            </p>
         </div>
     )
 }
