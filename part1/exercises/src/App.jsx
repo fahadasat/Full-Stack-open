@@ -56,23 +56,23 @@ const Header = ({headerText}) => {
 }
 
 const StateDisplay = ({allCount, goodCount, neutralCount, badCount, averageFeedback, positivePercent}) => {
-    // if (allCount > 0) {
+    if (allCount > 0) {
+        return (
+            <>
+                <SingleStatDisplay statName={'good'} stat={goodCount}></SingleStatDisplay>
+                <SingleStatDisplay statName={'neutral'} stat={neutralCount}></SingleStatDisplay>
+                <SingleStatDisplay statName={'bad'} stat={badCount}></SingleStatDisplay>
+                <SingleStatDisplay statName={'all'} stat={allCount}></SingleStatDisplay>
+                <SingleStatDisplay statName={'average'} stat={averageFeedback}></SingleStatDisplay>
+                <SingleStatDisplay statName={'positive'} stat={positivePercent + ' %'}></SingleStatDisplay>
+            </>
+        )
+    }
     return (
         <>
-            <SingleStatDisplay statName={'good'} stat={goodCount}></SingleStatDisplay>
-            <SingleStatDisplay statName={'neutral'} stat={neutralCount}></SingleStatDisplay>
-            <SingleStatDisplay statName={'bad'} stat={badCount}></SingleStatDisplay>
-            <SingleStatDisplay statName={'all'} stat={allCount}></SingleStatDisplay>
-            <SingleStatDisplay statName={'average'} stat={averageFeedback}></SingleStatDisplay>
-            <SingleStatDisplay statName={'positive'} stat={positivePercent + ' %'}></SingleStatDisplay>
+            No feedback given
         </>
     )
-    // }
-    // return (
-    //     <>
-    //         No feedback given
-    //     </>
-    // )
 }
 
 const SingleStatDisplay = ({statName, stat}) => {
