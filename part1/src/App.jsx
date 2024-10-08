@@ -1,81 +1,77 @@
 import {useState} from 'react'
 
 const App = () => {
-    const [counts, setCounts] = new useState({
-        left: 0,
-        right: 0
-    })
+    const [left, setLeft] = useState(0)
+    const [right, setRight] = useState(0)
+    const [allClicks, setAllClicks] = useState([])
+    const [buttonPressCount, setButtonPressCount] = useState(0)
 
-    const incLeftCount = () => {
-        setCounts({
-            ...counts,
-            left: counts.left + 1
-        })
-    }
+    // const incLeftCount = () => {
+    //     setAllClicks(allClicks.concat('L'))
+    //     const updatedLeft = left + 1
+    //     setLeft(updatedLeft)
+    //     setButtonPressCount(updatedLeft + right)
+    // }
 
     const incRightCount = () => {
-        setCounts({
-            ...counts,
-            right: counts.right + 1
-        })
+        setAllClicks(allClicks.concat('R'))
+        const updatedRight = right + 1
+        setRight(updatedRight)
+        setButtonPressCount(left + updatedRight)
     }
 
-    // const [counter, setCounter] = useState(0)
-    //
-    // const Display = ({counter}) => <div>{counter}</div>
-    //
-    // const Button = ({onButtonClick, buttonTitle}) => <button onClick={onButtonClick}> {buttonTitle} </button>
-    //
-    // const increaseCounter = () => {
-    //     setCounter(counter + 1)
-    //     console.log(counter + 1)
-    // }
-    //
-    // const decreaseCounter = () => {
-    //     setCounter(counter - 1)
-    //     console.log(counter - 1)
-    // }
-    //
-    // const resetCounter = () => {
-    //     setCounter(0)
-    //     console.log(0)
-    // }
-
     return (
         <div>
-            {counts.left}
-            <button onClick={() => incLeftCount()}>
-                left
-            </button>
-            <button onClick={() => incRightCount()}>
-                right
-            </button>
-            {counts.right}
-
-            {/*<Display counter={counter}> </Display>*/}
-            {/*<br/>*/}
-            {/*<Button onButtonClick={increaseCounter} buttonTitle='Add'/>*/}
-            {/*<Button onButtonClick={decreaseCounter} buttonTitle='Subtract'/>*/}
-            {/*<Button onButtonClick={resetCounter} buttonTitle='Reset'/>*/}
+            {left}
+            <Button
+                buttonFunction={() => {
+                    setAllClicks(allClicks.concat('L'))
+                    const updatedLeft = left + 1
+                    setLeft(updatedLeft)
+                    setButtonPressCount(updatedLeft + right)
+                }}
+                buttonText={'Left'}
+            ></Button>
+            <Button buttonFunction={incRightCount} buttonText={'Right'}></Button>
+            {right}
+            <History allClicks={allClicks}/>
+            <p> Total Presses: {buttonPressCount} </p>
         </div>
 
     )
 }
 
-const Hello = ({name, age}) => {
-
-    const bornYear = () => new Date().getFullYear() - age
-
+const Button = ({buttonFunction, buttonText}) => {
     return (
-        <div>
-            <p>
-                Hello {name}, you are {age} years old
-            </p>
-            <p>
-                So you were probably born in {bornYear()}
-            </p>
-        </div>
+        <button onClick={buttonFunction}>
+            {buttonText}
+        </button>
     )
 }
+
+const History = (props) => {
+    if (props.allClicks.length > 0) {
+        return (
+            <p> Button History: {props.allClicks.join(' ')} </p>
+        )
+    }
+    return (<p></p>)
+}
+
+// const Hello = ({name, age}) => {
+//
+//     const bornYear = () => new Date().getFullYear() - age
+//
+//     return (
+//         <div>
+//             <p>
+//                 Hello {name}, you are {age} years old
+//             </p>
+//             <p>
+//                 So you were probably born in {bornYear()}
+//             </p>
+//         </div>
+//     )
+// }
 
 export default App
