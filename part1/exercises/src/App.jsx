@@ -1,7 +1,6 @@
 import {useState} from "react";
 
 const App = () => {
-
     const [goodCount, setGoodCount] = useState(0)
     const [neutralCount, setNeutralCount] = useState(0)
     const [badCount, setBadCount] = useState(0)
@@ -44,13 +43,8 @@ const App = () => {
 
             <Header headerText={'statistics'}></Header>
 
-            <StatDisplay statName={'good'} stat={goodCount}></StatDisplay>
-            <StatDisplay statName={'neutral'} stat={neutralCount}></StatDisplay>
-            <StatDisplay statName={'bad'} stat={badCount}></StatDisplay>
-            <StatDisplay statName={'all'} stat={allCount}></StatDisplay>
-            <StatDisplay statName={'average'} stat={averageFeedback}></StatDisplay>
-            <StatDisplay statName={'positive'} stat={positivePercent + ' %'}></StatDisplay>
-
+            <StateDisplay allCount={allCount} goodCount={goodCount} neutralCount={neutralCount} badCount={badCount}
+                          averageFeedback={averageFeedback} positivePercent={positivePercent}> </StateDisplay>
         </>
     )
 }
@@ -61,7 +55,27 @@ const Header = ({headerText}) => {
     )
 }
 
-const StatDisplay = ({statName, stat}) => {
+const StateDisplay = ({allCount, goodCount, neutralCount, badCount, averageFeedback, positivePercent}) => {
+    // if (allCount > 0) {
+    return (
+        <>
+            <SingleStatDisplay statName={'good'} stat={goodCount}></SingleStatDisplay>
+            <SingleStatDisplay statName={'neutral'} stat={neutralCount}></SingleStatDisplay>
+            <SingleStatDisplay statName={'bad'} stat={badCount}></SingleStatDisplay>
+            <SingleStatDisplay statName={'all'} stat={allCount}></SingleStatDisplay>
+            <SingleStatDisplay statName={'average'} stat={averageFeedback}></SingleStatDisplay>
+            <SingleStatDisplay statName={'positive'} stat={positivePercent + ' %'}></SingleStatDisplay>
+        </>
+    )
+    // }
+    // return (
+    //     <>
+    //         No feedback given
+    //     </>
+    // )
+}
+
+const SingleStatDisplay = ({statName, stat}) => {
     return (
         <div>{statName} {stat}</div>
     )
