@@ -5,17 +5,33 @@ const App = () => {
     const [goodCount, setGoodCount] = useState(0)
     const [neutralCount, setNeutralCount] = useState(0)
     const [badCount, setBadCount] = useState(0)
+    const [allCount, setAllCount] = useState(0)
+    const [averageFeedback, setAverageFeedback] = useState(0)
+    const [positivePercent, setPositivePercent] = useState(0)
 
     const incGoodCount = () => {
-        setGoodCount(goodCount + 1);
+        //increase allCount + 1 or practice dealing with async
+        const newGoodCount = goodCount + 1
+        setGoodCount(newGoodCount);
+        setAllCount(newGoodCount + neutralCount + badCount)
+        setAverageFeedback((newGoodCount - badCount) / (newGoodCount + neutralCount + badCount))
+        setPositivePercent(newGoodCount / (newGoodCount + neutralCount + badCount) * 100)
     }
 
     const incNeutralCount = () => {
-        setNeutralCount(neutralCount + 1)
+        const newNeutralCount = neutralCount + 1
+        setNeutralCount(newNeutralCount)
+        setAllCount(goodCount + newNeutralCount + badCount)
+        setAverageFeedback((goodCount - badCount) / (goodCount + newNeutralCount + badCount))
+        setPositivePercent(goodCount / (goodCount + newNeutralCount + badCount) * 100)
     }
 
     const incBadCount = () => {
-        setBadCount(badCount + 1)
+        const newBadCount = badCount + 1
+        setBadCount(newBadCount)
+        setAllCount(goodCount + neutralCount + newBadCount)
+        setAverageFeedback((goodCount - newBadCount) / (goodCount + neutralCount + newBadCount))
+        setPositivePercent(goodCount / (goodCount + neutralCount + newBadCount) * 100)
     }
 
     return (
@@ -31,6 +47,9 @@ const App = () => {
             <StatDisplay statName={'good'} stat={goodCount}></StatDisplay>
             <StatDisplay statName={'neutral'} stat={neutralCount}></StatDisplay>
             <StatDisplay statName={'bad'} stat={badCount}></StatDisplay>
+            <StatDisplay statName={'all'} stat={allCount}></StatDisplay>
+            <StatDisplay statName={'average'} stat={averageFeedback}></StatDisplay>
+            <StatDisplay statName={'positive'} stat={positivePercent + ' %'}></StatDisplay>
 
         </>
     )
