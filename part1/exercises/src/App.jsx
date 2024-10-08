@@ -12,25 +12,57 @@ const App = () => {
         'The only way to go fast, is to go well.'
     ]
 
-    const [anecdote, setAnecdote] = useState(0)
+    const [anecdoteNumber, setAnecdoteNumber] = useState(0)
+    const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
 
-    const newAnecdote = () => {
-        return setAnecdote(Math.floor(Math.random() * anecdotes.length))
+    const onClickNewAnecdote = () => {
+        setAnecdoteNumber(Math.floor(Math.random() * anecdotes.length))
+    }
+
+    const onClickVote = () => {
+        const updatedVotes = [...votes]
+        updatedVotes[anecdoteNumber] += 1
+        setVotes(updatedVotes)
     }
 
     return (
         <>
-            {anecdotes[anecdote]}
-            <Button buttonFunction={newAnecdote} buttonName={'next anecdote'}></Button>
+            <Anecdote anecdotes={anecdotes} anecdoteNumber={anecdoteNumber} votes={votes}></Anecdote>
+            <div>
+                <Button buttonFunction={onClickVote} buttonName={'vote'}></Button>
+                <Button buttonFunction={onClickNewAnecdote} buttonName={'next anecdote'}></Button>
+            </div>
         </>
     )
 }
 
+const Anecdote = ({anecdotes, anecdoteNumber, votes}) => {
+
+    if (votes[anecdoteNumber] > 0) {
+        return (
+            <>
+                <div>
+                    {anecdotes[anecdoteNumber]}
+                </div>
+                <div>
+                    has {votes[anecdoteNumber]} votes
+                </div>
+            </>
+        )
+    } else {
+        return (
+            <>
+                {anecdotes[anecdoteNumber]}
+            </>
+        )
+    }
+}
+
 const Button = ({buttonFunction, buttonName}) => {
     return (
-        <div>
+        <>
             <button onClick={buttonFunction}> {buttonName} </button>
-        </div>
+        </>
     )
 }
 
