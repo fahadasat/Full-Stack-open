@@ -14,6 +14,7 @@ const App = () => {
 
     const [anecdoteNumber, setAnecdoteNumber] = useState(0)
     const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
+    const [highestVotedAnecdote, setHighestVotedAnecdote] = useState(0)
 
     const onClickNewAnecdote = () => {
         setAnecdoteNumber(Math.floor(Math.random() * anecdotes.length))
@@ -23,16 +24,30 @@ const App = () => {
         const updatedVotes = [...votes]
         updatedVotes[anecdoteNumber] += 1
         setVotes(updatedVotes)
+        if (updatedVotes[anecdoteNumber] > updatedVotes[highestVotedAnecdote])
+            setHighestVotedAnecdote(anecdoteNumber)
     }
 
     return (
         <>
+            <Headers title={'Anecdote of the day'}></Headers>
             <Anecdote anecdotes={anecdotes} anecdoteNumber={anecdoteNumber} votes={votes}></Anecdote>
             <div>
                 <Button buttonFunction={onClickVote} buttonName={'vote'}></Button>
                 <Button buttonFunction={onClickNewAnecdote} buttonName={'next anecdote'}></Button>
             </div>
+
+            <Headers title={'Anecdote with the most votes'}></Headers>
+            <Anecdote anecdotes={anecdotes} anecdoteNumber={highestVotedAnecdote} votes={votes}></Anecdote>
         </>
+    )
+}
+
+const Headers = ({title}) => {
+    return (
+        <h1>
+            {title}
+        </h1>
     )
 }
 
